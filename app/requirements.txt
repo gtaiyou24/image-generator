@@ -4,3 +4,5 @@ transformers==4.33.2
 diffusers==0.21.1
 torch==2.0.1
 Pillow==10.0.0
+boto3==1.28.49
+sagemaker==2.186.0

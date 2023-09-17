@@ -8,7 +8,7 @@ ENV CONDA_AUTO_UPDATE_CONDA=false \
 # install utilities
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y curl file make xz-utils sudo patch libopencv-dev libgl1-mesa-dev && \
+    apt-get install -y curl file make xz-utils sudo patch && \
     apt install -y gcc g++
 
 RUN curl -sLo ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux-x86_64.sh \

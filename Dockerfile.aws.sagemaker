@@ -8,9 +8,16 @@ ENV CONDA_AUTO_UPDATE_CONDA=false \
 # install utilities
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y curl file make xz-utils sudo patch
+    apt-get install -y curl mecab libmecab-dev mecab-ipadic mecab-ipadic-utf8 file git make curl xz-utils sudo patch libopencv-dev libgl1-mesa-dev && \
+    apt install -y gcc g++
 
-RUN curl -sLo ~/miniconda.sh https://repo.anaconda.com/miniconda/miniconda3-py39_4.12.0-linux-x86_64.sh \
+# install mecab-ipadic-neologd
+RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
+    && cd mecab-ipadic-neologd \
+    && bin/install-mecab-ipadic-neologd -n -a -y \
+    && rm -rf mecab-ipadic-neologd
+
+RUN curl -sLo ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux-x86_64.sh \
     && chmod +x ~/miniconda.sh \
     && ~/miniconda.sh -b -p /opt/miniconda \
     && rm ~/miniconda.sh \
@@ -23,6 +30,9 @@ RUN python3 -m pip --no-cache-dir install --upgrade pip && \
 
 COPY ./app/requirements.txt .
 RUN pip3 --timeout=300 --no-cache-dir install -r requirements.txt
+
+# Copy model files
+#COPY ./model /model
 
 # Copy app files
 COPY ./app /app

@@ -15,7 +15,7 @@ class InvocationsRequest(BaseModel):
         if name == 'origin':
             return self.__image_from(self.origin)
         elif name == 'mask':
-            return self.__image_from(self.origin)
+            return self.__image_from(self.mask)
         else:
             return self.__image_from(self.reference)
 

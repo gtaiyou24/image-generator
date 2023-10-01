@@ -1,5 +1,5 @@
 {
-  "image_url": "https://cdn.grail.bz/images/goods/d/an1244/an1244_v2.jpg",
-  "mask_url": "https://d2bg1d9js8iwqs.cloudfront.net/tmp/mask/83ca2d89-f5a9-4096-b7a3-65e94f60f0f8.jpeg",
-  "example_url": "https://cdn.grail.bz/images/goods/d/an1244/an1244_col_20.jpg"
+  "origin": "https://cdn.grail.bz/images/goods/d/an1244/an1244_v2.jpg",
+  "mask": "https://d2bg1d9js8iwqs.cloudfront.net/tmp/mask/83ca2d89-f5a9-4096-b7a3-65e94f60f0f8.jpeg",
+  "reference": "https://cdn.grail.bz/images/goods/d/an1244/an1244_col_20.jpg"
 }

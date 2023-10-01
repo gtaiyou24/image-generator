@@ -1,9 +1,11 @@
 import argparse
+import base64
 import io
 import json
 import os
 import zipfile
 
+import PIL
 import boto3
 import botocore.response
 import sagemaker
@@ -38,8 +40,18 @@ def main():
     zf = zipfile.ZipFile(io.BytesIO(streaming_body.read()), "r")
 
     for i, fileinfo in enumerate(zf.infolist()):
+        image = PIL.Image.open(zf.open(fileinfo.filename))
+        print(to_base64(image, image.format.lower()))
+
         with open(f'./images/{fileinfo.filename}', 'wb') as f:
             f.write(zf.read(fileinfo.filename))
+
+
+def to_base64(img, format="jpeg"):
+    buffer = io.BytesIO()
+    img.save(buffer, format)
+    img_str = base64.b64encode(buffer.getvalue()).decode("ascii")
+    return f"data:image/{format};base64,{img_str}"
 
 
 if __name__ == "__main__":

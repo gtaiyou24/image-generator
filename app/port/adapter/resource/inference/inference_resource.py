@@ -19,12 +19,13 @@ router = APIRouter(
 
 @router.post('', name='推論エンドポイント')
 def invocations(invocations: InvocationsRequest, request: fastapi.Request):
-    init_image = download_image(invocations.image_url).resize((512, 512))
-    mask_image = download_image(invocations.mask_url).resize((512, 512))
-    example_image = download_image(invocations.example_url).resize((512, 512))
-
     pipe: PaintByExamplePipeline = request.app.pipe
-    images: list[Image.Image] = pipe(image=init_image, mask_image=mask_image, example_image=example_image).images
+
+    images: list[Image.Image] = pipe(
+        image=invocations.image('origin').resize((512, 512)),
+        mask_image=invocations.image('mask').resize((512, 512)),
+        example_image=invocations.image('reference').resize((512, 512))
+    ).images
 
     zip_buffer = io.BytesIO()
     with ZipFile(zip_buffer, 'w') as zip_file:
@@ -41,8 +42,3 @@ def invocations(invocations: InvocationsRequest, request: fastapi.Request):
         media_type="application/zip",
         headers={"Content-Disposition": "attachment; filename=images.zip"},
     )
-
-
-def download_image(url: str) -> Image:
-    response = requests.get(url)
-    return Image.open(BytesIO(response.content)).convert("RGB")

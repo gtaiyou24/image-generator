@@ -1,9 +1,7 @@
 import io
-from io import BytesIO
 from zipfile import ZipFile
 
 import fastapi
-import requests
 from PIL import Image
 from diffusers import PaintByExamplePipeline
 from fastapi import APIRouter
